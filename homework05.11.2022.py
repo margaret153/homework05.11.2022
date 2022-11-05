@@ -8,9 +8,8 @@ class Human:
         self.car = car
         self.money = 100
         self.satiety = 50
-        self.food = 70
-        self.gladness = 60
-
+        self.gladness = 50
+        self.alive = True
 
     def get_home(self):
         self.home = Home()
@@ -25,30 +24,28 @@ class Human:
         self.job = Job(job_list)
 
     def eat(self):
-        if self.food <= 0:
-            self.eating('EAT')
+        if self.home <= 0:
+            self.shopping('food')
         else:
             if self.satiety >= 100:
                 self.satiety = 100
                 return
-            self.satienty += 6
-            self.home.food -= 6
-
-    def eat(self):
-        if self.home <= 0:
-            self.shopping('food')
-
+            self.satiety += 5
+            self.home.food -= 5
     def work(self):
-        if self.car.drive()
+        if self.car.drive():
             pass
         else:
             if self.car.fuel < 20:
                 self.shopping('fuel')
                 return
-            self.money += self.job.salary
-            self.gladness -= self.job.gladness_less
-            self.satiety -= 4
-    def shopping(self,manage):
+            else:
+                self.to_repair()
+                return
+        self.money += self.job.salary
+        self.gladness -= self.job.gladness_less
+        self.satiety -= 4
+    def shopping(self, manage):
         if self.car.drive():
             pass
         else:
@@ -57,19 +54,19 @@ class Human:
             else:
                 self.to_repair()
                 return
-            if manage == 'fuel' :
-                print('I bought fuel')
-                self.money -= 100
-                self.car.fuel += 100
-            elif manage == 'food':
-                print('Bought food')
-                self.money -= 50
-                self.home.food += 50
-            elif manage == 'delicacies' :
-                print('I happy')
-                self.gladness += 10
-                self.money -= 15
-                self.satienty += 2
+        if manage == 'fuel':
+            print('I bought fuel')
+            self.money -= 100
+            self.car.fuel += 100
+        elif manage == 'food':
+            print('Bought food')
+            self.money -= 50
+            self.home.food += 50
+        elif manage == 'delicacies':
+            print('I happy')
+            self.gladness += 10
+            self.money -= 15
+            self.satiety += 2
 
 
     def chill(self):
@@ -79,13 +76,33 @@ class Human:
         self.gladness -= 5
         self.home.mess = 0
     def to_repair(self):
-        self.car.strenght += 100
+        self.car.strength += 100
         self.money -= 50
 
     def days_indexes(self):
+        print(f"satiety = {self.satiety}")
+        print(f"money = {self.money} $")
+        print(f"gladness = {self.gladness} level of happiness")
+        print(f"brand of car = {self.brand}")
+        print(f"level of fuel in the car = {self.fuel}")
+        print(f"your car is good if its start is more than 0 = {self.strength}")
+        print(f"your home tidy level = {self.home.mess}")
+        print(f"level of food in the house = {self.home.food}")
+
+
+
 
     def is_alive(self):
-        pass
+        if self.satiety <= 0:
+            self.alive = False
+            print("You wanted to eat and you ate raw meat than you got poisoned.")
+        elif self.gladness <= 0:
+            self.alive = False
+            print("depression")
+        elif self.money <= -300:
+            self.alive = False
+            print("You got bad mood")
+
     def live(self):
         pass
 
@@ -116,11 +133,11 @@ class Job:
         self.salary = job_list[self.job]['salary']
         self.gladness_less = job_list[self.job]['gladness_less']
 
+
 job_list = {'Java': {'salary': 50, 'gladness_less': 10},
             'Python': {'salary': 40, 'gladness_less': 3},
             'C++': {'salary': 70, 'gladness_less': 25},
             'Rust': {'salary': 60, 'gladness_less': 1}}
-
 
 brand_of_car = {'BMW': {'fuel': 100, 'strength': 100, 'consumption': 6},
                 'Lada': {'fuel': 50, 'strength': 40, 'consumption': 10},
