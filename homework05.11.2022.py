@@ -104,7 +104,48 @@ class Human:
             print("You got bad mood")
 
     def live(self):
-        pass
+        if self.is_alive() == False:
+            return False
+        if self.home == None:
+            print('Settled in the house')
+            self.ger_home()
+        if self.car == None:
+            print(f'I bought a car {self.car.brand}')
+        if self.job is None:
+            self.get_job()
+            print(f"I don't have a job going to get a job {self.job.job}" )
+        self.days_indexes(day)
+        dice = random.randint(1, 4)
+        if self.satiety < 20:
+            print("I'll go eat")
+            self.eat()
+        if self.gladness < 20:
+            if self.home.mess > 15:
+                print("I want chill, but mess")
+                self.clean_home()
+            else:
+                print("Let's chill")
+                self.chill()
+        elif self.money < 0:
+            print("I need to repair my car")
+            self.to_repair()
+        elif dice == 2:
+            print("Start working")
+            self.work()
+        elif dice == 3:
+            print("Cleaning time")
+            self.clean_home()
+        elif dice == 4:
+            print("Time for shopping")
+            self.shopping(manage='delicacies')
+
+
+
+
+
+
+
+
 
 class Auto:
     def __init__(self, brand_list):
@@ -143,3 +184,10 @@ brand_of_car = {'BMW': {'fuel': 100, 'strength': 100, 'consumption': 6},
                 'Lada': {'fuel': 50, 'strength': 40, 'consumption': 10},
                 'Volvo': {'fuel': 70, 'strength': 150, 'consumption': 8},
                 'Ferrari': {'fuel': 80, 'strength': 120, 'consumption': 14}}
+
+
+
+nick = Human(name='Nick')
+for day in range(1,8):
+    if nick.live(day) == False:
+        break
